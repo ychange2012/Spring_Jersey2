@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<beans xmlns="http://www.springframework.org/schema/beans"
+xmlns:context="http://www.springframework.org/schema/context" 
+xmlns:aop="http://www.springframework.org/schema/aop" 
+xmlns:lang="http://www.springframework.org/schema/lang"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xmlns:util="http://www.springframework.org/schema/util"   
+xsi:schemaLocation="http://www.springframework.org/schema/beans  
+					http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+					http://www.springframework.org/schema/context 
+					http://www.springframework.org/schema/context/spring-context-4.3.xsd
+					http://www.springframework.org/schema/aop 
+					http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+					http://www.springframework.org/schema/lang 
+					http://www.springframework.org/schema/lang/spring-lang-4.3.xsd
+					http://www.springframework.org/schema/util 
+					http://www.springframework.org/schema/util/spring-util-4.3.xsd"> 
+	
+	<!-- <bean id="mainDataSource"  class="com.mchange.v2.c3p0.ComboPooledDataSource"  destroy-method="close">  -->
+        <!-- <property name="driverClass" value="oracle.jdbc.driver.OracleDriver" />  -->
+        <!-- <property name="jdbcUrl" value="jdbc:oracle:thin:@127.0.0.1:1521:xe" />  -->
+        <!-- <property name="user" value="hr" />  -->
+        <!-- <property name="password" value="hr" />  -->
+        <!--连接池中保留的最小连接数。--> 
+        <!-- <property name="minPoolSize" value="5" />  -->
+        <!--连接池中保留的最大连接数。Default: 15 --> 
+        <!-- <property name="maxPoolSize" value="60" />  -->
+        <!--初始化时获取的连接数，取值应在minPoolSize与maxPoolSize之间。Default: 3 --> 
+        <!-- <property name="initialPoolSize" value="10" />  -->
+        <!--最大空闲时间,60秒内未使用则连接被丢弃。若为0则永不丢弃。Default: 0 --> 
+        <!-- <property name="maxIdleTime" value="180" />  -->
+        <!--当连接池中的连接耗尽的时候c3p0一次同时获取的连接数。Default: 3 --> 
+        <!-- <property name="acquireIncrement" value="5" />  -->
+        <!--JDBC的标准参数，用以控制数据源内加载的PreparedStatements数量。但由于预缓存的statements 
+	                属于单个connection而不是整个连接池。所以设置这个参数需要考虑到多方面的因素。 
+	               如果maxStatements与maxStatementsPerConnection均为0，则缓存被关闭。Default: 0--> 
+        <!-- <property name="maxStatements" value="0" />  -->
+        <!--每60秒检查所有连接池中的空闲连接。Default: 0 --> 
+        <!-- <property name="idleConnectionTestPeriod" value="600" />  -->
+        <!--定义在从数据库获取新连接失败后重复尝试的次数。Default: 30 --> 
+        <!-- <property name="acquireRetryAttempts" value="30" />  -->
+        <!--获取连接失败将会引起所有等待连接池来获取连接的线程抛出异常。但是数据源仍有效 
+	             保留，并在下次调用getConnection()的时候继续尝试获取连接。如果设为true，那么在尝试 
+	             获取连接失败后该数据源将申明已断开并永久关闭。Default: false--> 
+       <!--  <property name="breakAfterAcquireFailure" value="false" />  -->
+        <!--因性能消耗大请只在需要的时候使用它。如果设为true那么在每个connection提交的 
+	            时候都将校验其有效性。建议使用idleConnectionTestPeriod或automaticTestTable 
+	             等方法来提升连接测试的性能。Default: false --> 
+        <!-- <property name="testConnectionOnCheckout" value="true" /> -->
+        <!-- <property name="debugUnreturnedConnectionStackTraces" value="true" />  -->
+		<!-- <property name="unreturnedConnectionTimeout" value="1200" />  -->
+    <!-- </bean> -->
+    
+    <bean id="mainDataSource"  class="com.alibaba.druid.pool.DruidDataSource"  destroy-method="close"> 
+        <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" /> 
+        <property name="url" value="jdbc:oracle:thin:@127.0.0.1:1521:xe" /> 
+        <property name="username" value="hr" /> 
+        <property name="password" value="hr" /> 
+         
+            <!-- 配置初始化大小、最小、最大 -->  
+            <property name="initialSize" value="1" />  
+            <property name="minIdle" value="1" />   
+            <property name="maxActive" value="20" />  
+            <!-- 配置获取连接等待超时的时间 -->  
+            <property name="maxWait" value="60000" />  
+            <!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->  
+            <property name="timeBetweenEvictionRunsMillis" value="60000" />  
+            <!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->  
+            <property name="minEvictableIdleTimeMillis" value="300000" />  
+            <property name="testWhileIdle" value="true" />  
+            <property name="testOnBorrow" value="false" />  
+            <property name="testOnReturn" value="false" />  
+            <!-- 打开PSCache，并且指定每个连接上PSCache的大小 -->  
+            <property name="poolPreparedStatements" value="true" />  
+            <property name="maxPoolPreparedStatementPerConnectionSize" value="20" /> 
+            <property name="filters" value="stat,log4j"/>
+            <property name="proxyFilters">
+		        <list>
+		            <ref bean="log-filter"/>
+		        </list>
+		    </property>
+    </bean>
+    
+    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+	    <property name="location" value="classpath:jdbc.properties" />
+	</bean>
+	
+	<bean id="threadPoolTaskExecutor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+        <!-- 核心线程数，默认为1 -->
+        <property name="corePoolSize" value="10" />
+        <!-- 最大线程数，默认为Integer.MAX_VALUE -->
+        <property name="maxPoolSize" value="50" />
+        <!-- 队列最大长度，一般需要设置值>=notifyScheduledMainExecutor.maxNum；默认为Integer.MAX_VALUE
+        <property name="queueCapacity" value="1000" /> -->
+        <!-- 线程池维护线程所允许的空闲时间，默认为60s -->
+        <property name="keepAliveSeconds" value="300" />
+        <!-- 线程池对拒绝任务（无线程可用）的处理策略，目前只支持AbortPolicy、CallerRunsPolicy；默认为后者 -->
+        <property name="rejectedExecutionHandler">
+        <!-- AbortPolicy:直接抛出java.util.concurrent.RejectedExecutionException异常 -->
+        <!-- CallerRunsPolicy:主线程直接执行该任务，执行完之后尝试添加下一个任务到线程池中，可以有效降低向线程池内添加任务的速度 -->
+        <!-- DiscardOldestPolicy:抛弃旧的任务、暂不支持；会导致被丢弃的任务无法再次被执行 -->
+        <!-- DiscardPolicy:抛弃当前任务、暂不支持；会导致被丢弃的任务无法再次被执行 -->
+        <bean class="java.util.concurrent.ThreadPoolExecutor$CallerRunsPolicy" />
+        </property>
+    </bean>
+	
+	<bean id="systemInit" class="com.demo.utils.SystemInit">
+		<property name="initList">
+			<list>
+				<value>test1</value>
+				<value>test2</value>
+			</list>
+		</property>
+	</bean>
+	
+	<context:component-scan base-package="com.demo.*" />
+	
+	<bean id="log-filter" class="com.alibaba.druid.filter.logging.Log4jFilter">
+	 <property name="resultSetLogEnabled" value="false" />
+	 </bean>
+	<bean id="stat-filter" class="com.alibaba.druid.filter.stat.StatFilter">
+	    <property name="slowSqlMillis" value="1" />
+	    <property name="logSlowSql" value="true" />
+	</bean>
+</beans>
