@@ -152,6 +152,33 @@ public class CommonDaoImpl implements CommonDao {
 		return null;
 	}
 
+	@Override
+	public long excuteSQL(String sql, Object... obj) {
+		PreparedStatement pst = null;
+		Connection con = null;
+		long result=0;
+		try {
+			con = dataSource.getConnection();
+			con.setAutoCommit(false);
+			pst = con.prepareStatement(sql);
+			if(obj!=null && obj.length>0){
+				for(int x=0;x<obj.length;x++){
+					pst.setObject(x+1, obj[x]);
+				}
+			}
+			result = pst.executeUpdate();
+			con.commit();
+			pst.close();
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally{
+			DbUtils.closeQuietly(con, pst, null);
+		}
+		
+		return result;
+	}
+
 	
 
 }

@@ -15,7 +15,10 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+
+import com.demo.service.DemoService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiParam;
@@ -27,6 +30,9 @@ import net.sf.json.JSONObject;
 public class Sample2 {
 	@Context
 	HttpServletRequest request;
+	
+	@Autowired
+	private DemoService demoService;
 	
 	@Path("login")
 	@POST
@@ -55,6 +61,18 @@ public class Sample2 {
 			String user = o.getString("username");
 			System.out.println("========:"+user);
 		}
+		Map<String,Object> result = new HashMap<String,Object>();
+		result.put("msg", "success");
+		return Response.ok(result).build();
+    }
+	
+	@Path("update")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response update(@ApiParam(value = "账号", required = true) @FormParam("id") long id,
+			@ApiParam(value = "姓名", required = true)@FormParam("name") String name
+			) {
+		demoService.updateData(id, name);
 		Map<String,Object> result = new HashMap<String,Object>();
 		result.put("msg", "success");
 		return Response.ok(result).build();

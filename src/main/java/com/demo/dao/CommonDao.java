@@ -25,4 +25,6 @@ public interface CommonDao {
 	public Map<String,Object> queryObjectSQL(Connection con ,String sql, Object...obj) throws SQLException;
 	public Map<String,Object> queryObjectSQL(String sql) throws SQLException;
 	public Map<String,Object> queryObjectSQL(String sql, Object...obj) throws SQLException;
+	
+	public long excuteSQL(String sql,Object ...obj);
 }

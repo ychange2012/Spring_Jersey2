@@ -129,6 +129,23 @@
 		  <artifactId>log4j</artifactId>
 		  <version>1.2.17</version>
 		</dependency>
+		
+		<dependency>
+		  <groupId>org.slf4j</groupId>
+		  <artifactId>slf4j-api</artifactId>
+		  <version>1.6.1</version>
+		</dependency>
+		<dependency>
+		  <groupId>org.slf4j</groupId>
+		  <artifactId>slf4j-log4j12</artifactId>
+		  <version>1.6.1</version>
+		</dependency>
+		<dependency>
+		  <groupId>org.slf4j</groupId>
+		  <artifactId>jul-to-slf4j</artifactId>
+		  <version>1.6.1</version>
+		</dependency>
+		
 		<dependency>
 		      <groupId>org.quartz-scheduler</groupId>
 		      <artifactId>quartz</artifactId>
@@ -149,7 +166,14 @@
 		            <artifactId>jsr311-api</artifactId>  
 		        </exclusion>  
 		    </exclusions>  
-		</dependency> 
+		</dependency>
+		
+		<dependency>
+		    <groupId>commons-dbutils</groupId>
+		    <artifactId>commons-dbutils</artifactId>
+		    <version>1.6</version>
+		</dependency>
+		 
     </dependencies>
      <build>
     <finalName>WebDemo</finalName>

@@ -1,10 +1,25 @@
 package com.demo.utils;
 
+import java.util.logging.Level;
+import java.util.logging.LogManager;
+import java.util.logging.Logger;
+
 import javax.ws.rs.ApplicationPath;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.core.Feature;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.glassfish.jersey.client.ClientConfig;
+import org.glassfish.jersey.filter.LoggingFilter;
 import org.glassfish.jersey.jackson.JacksonFeature;
+import org.glassfish.jersey.logging.LoggingFeature;
 import org.glassfish.jersey.server.ResourceConfig;
+import org.quartz.plugins.history.LoggingJobHistoryPlugin;
+import org.slf4j.bridge.SLF4JBridgeHandler;
 
+import com.demo.api.Sample;
 import com.demo.filter.DefaultResponseFilter;
 
 import io.swagger.config.ConfigFactory;
@@ -20,6 +35,11 @@ import io.swagger.jersey.listing.ApiListingResourceJSON;
 public class MainConf extends ResourceConfig {
 	 public MainConf(){
 		 packages("com.demo.api");
+//		 LogManager.getLogManager().reset();
+//		 SLF4JBridgeHandler.install();
+//		 Logger.getLogger("global").setLevel(Level.FINEST);
+		 //register(LoggingFeature.class);
+		 register(LoggingFilter.class);
 		 
 		 register(DefaultResponseFilter.class);
 		 

@@ -69,4 +69,11 @@ public class DemoServiceImpl implements DemoService {
 		}
 		
 	}
+
+	@Override
+	public void updateData(long id, String name) {
+		String sql = "update TEST_A set name = ? where id = ?";
+		long result = defultDao.excuteSQL(sql, name,id);
+		System.out.println(result);
+	}
 }
