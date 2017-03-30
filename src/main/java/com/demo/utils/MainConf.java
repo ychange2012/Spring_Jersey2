@@ -26,20 +26,17 @@ import io.swagger.config.ConfigFactory;
 import io.swagger.config.ScannerFactory;
 import io.swagger.config.SwaggerConfig;
 import io.swagger.jaxrs.config.BeanConfig;
-import io.swagger.jaxrs.config.DefaultJaxrsScanner;
-import io.swagger.jaxrs.listing.ApiListingResource;
-import io.swagger.jersey.listing.ApiListingResourceJSON;
 
 
 @ApplicationPath("/api")
 public class MainConf extends ResourceConfig {
 	 public MainConf(){
 		 packages("com.demo.api");
-//		 LogManager.getLogManager().reset();
-//		 SLF4JBridgeHandler.install();
-//		 Logger.getLogger("global").setLevel(Level.FINEST);
-		 //register(LoggingFeature.class);
-		 register(LoggingFilter.class);
+		 LogManager.getLogManager().reset();
+		 SLF4JBridgeHandler.removeHandlersForRootLogger();
+		 SLF4JBridgeHandler.install();
+		 Logger.getLogger("global").setLevel(Level.ALL);
+		 register(new LoggingFeature(Logger.getLogger(LoggingFeature.DEFAULT_LOGGER_NAME), Level.SEVERE, LoggingFeature.Verbosity.PAYLOAD_ANY, Integer.MAX_VALUE));
 		 
 		 register(DefaultResponseFilter.class);
 		 
