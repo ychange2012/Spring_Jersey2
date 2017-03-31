@@ -12,17 +12,20 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Service;
 
-import com.demo.dao.impl.DefultDao;
+import com.demo.dao.impl.DefultDaoImpl;
 import com.demo.service.DemoService;
 
 @Service("demoServiceImpl")
 public class DemoServiceImpl implements DemoService {
 	
 	@Autowired
-	DefultDao defultDao;
+	DefultDaoImpl defultDao;
 	
 	@Autowired
 	ThreadPoolTaskExecutor 	threadPoolTaskExecutor;
@@ -30,7 +33,6 @@ public class DemoServiceImpl implements DemoService {
 	public Map<String ,Object> queryById(long id){
 		Map<String ,Object> result = new HashMap<String ,Object>();
 		String sql = "select id,name,tel from a where a.id = 1";
-		//String sql = "select 1 from dual";
 		try {
 			result =  defultDao.queryObjectSQL(sql);
 		} catch (SQLException e) {
@@ -75,5 +77,40 @@ public class DemoServiceImpl implements DemoService {
 		String sql = "update TEST_A set name = ? where id = ?";
 		long result = defultDao.excuteSQL(sql, name,id);
 		System.out.println(result);
+	}
+	@Cacheable(value="common",key="#id" )
+	@Override
+	public String query(long id) {
+		System.out.println("=====query");
+		return defultDao.query(id);
+	}
+	
+	@Cacheable(value="default",key="#id" )
+	@Override
+	public String query2(long id) {
+		System.out.println("=====query");
+		return defultDao.query(id);
+	}
+	
+	@CachePut(value="common",key="#id")
+	@Override
+	public String update(long id, String name) {
+		System.out.println("=====update");
+		return defultDao.update(id, name);
+	}
+	
+	@CacheEvict(value="common",key="#id") 
+	@Override
+	public void del(long id) {
+		System.out.println("=====del");
+		defultDao.del(id);
+		
+	}
+	
+	@CachePut(value="common",key="#id")
+	@Override
+	public String insert(long id, String name) {
+		System.out.println("=====insert");
+		return defultDao.insert(id, name);
 	}
 }

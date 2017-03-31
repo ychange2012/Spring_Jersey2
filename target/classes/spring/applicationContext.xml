@@ -82,7 +82,12 @@ xsi:schemaLocation="http://www.springframework.org/schema/beans
     </bean>
     
     <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-	    <property name="location" value="classpath:jdbc.properties" />
+	    <property name="locations">
+	    	<array> 
+	    		<value>classpath:jdbc.properties</value>
+	    		<value>classpath:redis-config.properties</value>
+	    	</array> 
+	    </property>
 	</bean>
 	
 	<bean id="threadPoolTaskExecutor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">

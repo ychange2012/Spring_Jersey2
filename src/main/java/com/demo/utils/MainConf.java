@@ -5,26 +5,12 @@ import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
 import javax.ws.rs.ApplicationPath;
-import javax.ws.rs.client.Client;
-import javax.ws.rs.client.ClientBuilder;
-import javax.ws.rs.core.Feature;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.glassfish.jersey.client.ClientConfig;
-import org.glassfish.jersey.filter.LoggingFilter;
 import org.glassfish.jersey.jackson.JacksonFeature;
 import org.glassfish.jersey.logging.LoggingFeature;
 import org.glassfish.jersey.server.ResourceConfig;
-import org.quartz.plugins.history.LoggingJobHistoryPlugin;
 import org.slf4j.bridge.SLF4JBridgeHandler;
 
-import com.demo.api.Sample;
 import com.demo.filter.DefaultResponseFilter;
-
-import io.swagger.config.ConfigFactory;
-import io.swagger.config.ScannerFactory;
-import io.swagger.config.SwaggerConfig;
 import io.swagger.jaxrs.config.BeanConfig;
 
 
@@ -35,8 +21,7 @@ public class MainConf extends ResourceConfig {
 		 LogManager.getLogManager().reset();
 		 SLF4JBridgeHandler.removeHandlersForRootLogger();
 		 SLF4JBridgeHandler.install();
-		 Logger.getLogger("global").setLevel(Level.ALL);
-		 register(new LoggingFeature(Logger.getLogger(LoggingFeature.DEFAULT_LOGGER_NAME), Level.SEVERE, LoggingFeature.Verbosity.PAYLOAD_ANY, Integer.MAX_VALUE));
+		 register(new LoggingFeature(Logger.getLogger(LoggingFeature.DEFAULT_LOGGER_NAME), Level.SEVERE, LoggingFeature.Verbosity.PAYLOAD_ANY,null));
 		 
 		 register(DefaultResponseFilter.class);
 		 
