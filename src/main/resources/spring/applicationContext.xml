@@ -108,7 +108,7 @@ xsi:schemaLocation="http://www.springframework.org/schema/beans
         <bean class="java.util.concurrent.ThreadPoolExecutor$CallerRunsPolicy" />
         </property>
     </bean>
-	
+	 
 	<bean id="systemInit" class="com.demo.utils.SystemInit">
 		<property name="initList">
 			<list>
