@@ -33,9 +33,9 @@ public class SysConfApi {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getConf(@QueryParam("id") long id){
-		sysService.getColName("SELECT t.id,t.last_name,t.start_date FROM test_col t");
 		Map<String,Object> result = new HashMap<String,Object>();
 		result.put("msg", "success");
+		result.put("data", sysService.getColName(id));
 		return Response.ok(result).build();
 	}
 }
