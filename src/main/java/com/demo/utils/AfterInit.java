@@ -1,6 +1,5 @@
 package com.demo.utils;
 
-import org.springframework.stereotype.Component;
 
 public class AfterInit {
 	public void execute(){

@@ -18,14 +18,15 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Service;
 
+import com.demo.dao.DefultDao;
 import com.demo.dao.impl.DefultDaoImpl;
 import com.demo.service.DemoService;
 
-@Service("demoServiceImpl")
+@Service
 public class DemoServiceImpl implements DemoService {
 	
 	@Autowired
-	DefultDaoImpl defultDao;
+	DefultDao defultDao;
 	
 	@Autowired
 	ThreadPoolTaskExecutor 	threadPoolTaskExecutor;
