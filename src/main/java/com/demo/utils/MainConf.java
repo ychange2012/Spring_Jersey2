@@ -52,7 +52,7 @@ public class MainConf extends ResourceConfig {
 		 	BeanConfig beanConfig = new BeanConfig();
 	        beanConfig.setVersion("1.0.0");
 	        beanConfig.setSchemes(new String[]{"http"});
-	        beanConfig.setHost("192.168.200.89:8080");
+	        beanConfig.setHost("127.0.0.1:8080");
 	        beanConfig.setBasePath("Spring_Jersey2/api");
 	        beanConfig.setResourcePackage("com.demo.api");
 	        beanConfig.setScan(true);

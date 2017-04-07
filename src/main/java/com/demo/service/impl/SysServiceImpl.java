@@ -35,7 +35,7 @@ public class SysServiceImpl implements SysService {
 			String sql = "select t.grid_sql from test_grid t WHERE t.grid_id = ?";
 			con = defultDao.getDataSource().getConnection();
 			Map temp = defultDao.queryObjectSQL(sql, gridId);
-			String sqlStr = temp==null ? "select 1 from dual":temp.get("grid_sql").toString();
+			String sqlStr = temp==null ? null:temp.get("grid_sql").toString();
 			ps = con.prepareStatement(sqlStr);
 			rs = ps.executeQuery();
 			md = rs.getMetaData();

@@ -4,7 +4,7 @@
 <h2>主要增加功能</h2>
 1.采用调度方式来执行工程启动初始化的工作
 <br>
-2.集成swagger API调试界面
+2.集成swagger API调试界面 http://127.0.0.1:8080/Spring_Jersey2/swagger/
 <br>
 3.集成redis缓存
 <br>
