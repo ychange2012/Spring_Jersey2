@@ -7,6 +7,7 @@ import java.util.logging.Logger;
 import javax.ws.rs.ApplicationPath;
 import org.glassfish.jersey.jackson.JacksonFeature;
 import org.glassfish.jersey.logging.LoggingFeature;
+import org.glassfish.jersey.media.multipart.MultiPartFeature;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.slf4j.bridge.SLF4JBridgeHandler;
 
@@ -22,7 +23,7 @@ public class MainConf extends ResourceConfig {
 		 SLF4JBridgeHandler.removeHandlersForRootLogger();
 		 SLF4JBridgeHandler.install();
 		 register(new LoggingFeature(Logger.getLogger(LoggingFeature.DEFAULT_LOGGER_NAME), Level.SEVERE, LoggingFeature.Verbosity.PAYLOAD_ANY,null));
-		 
+		 register(MultiPartFeature.class);
 		 register(DefaultResponseFilter.class);
 		 
 		 register(JacksonFeature.class);

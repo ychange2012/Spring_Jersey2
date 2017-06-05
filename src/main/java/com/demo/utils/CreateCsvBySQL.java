@@ -10,8 +10,10 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Properties;
+import java.util.Random;
 
 import org.apache.commons.dbutils.DbUtils;
 import org.apache.commons.logging.Log;
@@ -31,7 +33,7 @@ public class CreateCsvBySQL {
 		ResultSetMetaData md = null;
 		File csvFile = null;
 		BufferedWriter csvFileOutputStream = null;
-		String basePath = "d:/csv_temp/";
+		String basePath = "d:/csv_temp/"+getFilePath();
 	    File baseDir = new File(basePath);
 		try {
 			Resource resource = new ClassPathResource("/jdbc.properties");
@@ -77,5 +79,20 @@ public class CreateCsvBySQL {
 		}
 		return false;
 	}
+	
+	/**
+     * 取得时间戳+随机数
+     * @return
+     */
+    private static String getFilePath(){
+    	SimpleDateFormat sdf;
+    	StringBuffer buf = new StringBuffer();
+        sdf = new SimpleDateFormat("yyMMddHHmmssSSS");
+        Random r=new Random();
+        for(int i = 0; i < 3; i++){
+            buf.append(r.nextInt(10));
+        }
+        return sdf.format(new Date())+buf.toString();
+    }
 
 }

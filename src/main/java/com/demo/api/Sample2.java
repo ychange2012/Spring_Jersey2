@@ -1,5 +1,11 @@
 package com.demo.api;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,6 +21,8 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
+import org.glassfish.jersey.media.multipart.FormDataParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
@@ -48,6 +56,17 @@ public class Sample2 {
 	}
 	
 	
+	
+	/**
+	 * data:JSON.stringify(param),
+	 * type:'POST',
+	 * contentType:'application/json'
+	 * dataType:'json'
+	 * 
+	 * @param json
+	 * @return
+	 */
+	
 	@Path("save")
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
@@ -77,5 +96,22 @@ public class Sample2 {
 		result.put("msg", "success");
 		return Response.ok(result).build();
     }
+	
+	@Path("default")
+	@POST
+	@Consumes(MediaType.MULTIPART_FORM_DATA)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response upload(@ApiParam(value="选择文件",required=true)
+			@FormDataParam("uploadFile") InputStream fileInputStream,
+			 @FormDataParam("uploadFile") FormDataContentDisposition fileFormDataContentDisposition
+			) {
+		System.out.println("000000"+fileFormDataContentDisposition.getFileName());
+		Map result = new HashMap();
+		result.put("success", "true");
+		return Response.ok(result).build();
+//		return null;
+	}
+	
+
 
 }

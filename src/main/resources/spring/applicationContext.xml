@@ -107,7 +107,7 @@ xsi:schemaLocation="http://www.springframework.org/schema/beans
         <bean class="java.util.concurrent.ThreadPoolExecutor$CallerRunsPolicy" />
         </property>
     </bean>
-	 
+    <!-- 
 	<bean id="systemInit" class="com.demo.utils.SystemInit">
 		<property name="initList">
 			<list>
@@ -116,7 +116,7 @@ xsi:schemaLocation="http://www.springframework.org/schema/beans
 			</list>
 		</property>
 	</bean>
-	
+	-->
 	<context:component-scan base-package="com.demo.*" />
 	
 	<bean id="log-filter" class="com.alibaba.druid.filter.logging.Log4jFilter">

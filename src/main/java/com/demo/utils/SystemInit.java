@@ -21,8 +21,8 @@ public class SystemInit implements ApplicationListener<ContextRefreshedEvent> {
 	public void onApplicationEvent(ContextRefreshedEvent event) {
 		if(event.getApplicationContext().getParent() == null){
 			for(int i=0;i<initList.length;i++){
-				//System.out.println("系统初始化："+initList[i]);
-				log.info("系统初始化："+initList[i]);
+				System.out.println("系统初始化："+initList[i]);
+				//log.info("系统初始化："+initList[i]);
 			}
 		}
 		
